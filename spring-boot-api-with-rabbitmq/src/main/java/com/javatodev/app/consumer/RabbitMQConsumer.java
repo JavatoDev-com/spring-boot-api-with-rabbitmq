@@ -1,14 +1,13 @@
 package com.javatodev.app.consumer;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.stereotype.Service;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @Service
 public class RabbitMQConsumer {
-
-    private static final Logger LOGGER = LoggerFactory.getLogger(RabbitMQConsumer.class);
 
     /**
      * Consume message from RabbitMQ queue
@@ -16,7 +15,6 @@ public class RabbitMQConsumer {
      */
     @RabbitListener(queues = {"${rabbitmq.queue.name}"})
     public void consume(String message){
-        LOGGER.info(String.format("Received message -> %s", message));
-
+        log.info(String.format("Received message -> %s", message));
     }
 }

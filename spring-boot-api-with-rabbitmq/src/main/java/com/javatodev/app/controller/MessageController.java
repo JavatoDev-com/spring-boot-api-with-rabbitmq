@@ -3,31 +3,30 @@ package com.javatodev.app.controller;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import com.javatodev.app.dto.MessageDto;
 import com.javatodev.app.dto.User;
 import com.javatodev.app.publisher.RabbitMQJsonProducer;
 import com.javatodev.app.publisher.RabbitMQProducer;
 
+import lombok.RequiredArgsConstructor;
+
+@RequiredArgsConstructor
 @RestController
 @RequestMapping("/api/v1")
 public class MessageController {
 
-    private RabbitMQProducer rabbitMQProducer;
+    private final RabbitMQProducer rabbitMQProducer;
 
-    private RabbitMQJsonProducer rabbitMQJsonProducer;
-
-    public MessageController(RabbitMQProducer rabbitMQProducer, RabbitMQJsonProducer rabbitMQJsonProducer) {
-        this.rabbitMQProducer = rabbitMQProducer;
-        this.rabbitMQJsonProducer = rabbitMQJsonProducer;
-    }
+    private final RabbitMQJsonProducer rabbitMQJsonProducer;
 
     /**
      * API for publish message for RabbitMQ queue
      * @param message
      * @return ResponseEntity
      */
-    @GetMapping("/publish")
-    public ResponseEntity<String> sendMessage(@RequestParam("message") String message){
-        rabbitMQProducer.sendMessage(message);
+    @PostMapping("/publish")
+    public ResponseEntity<String> sendMessage(@RequestBody MessageDto message){
+        rabbitMQProducer.sendMessage(message.getMessage());
         return ResponseEntity.ok("Message sent to RabbitMQ.");
     }
 

@@ -1,0 +1,20 @@
+POST http://localhost:8092/api/v1/publish
+Content-Type: application/json
+
+{
+  "message": "Hello javatodev application."
+}
+
+###
+
+POST http://localhost:8092/api/v1/json/publish
+Content-Type: application/json
+
+{
+  "id": 1,
+  "firstName": "Chinthaka",
+  "lastName": "Dinadasa"
+}
+
+###
+

@@ -35,7 +35,7 @@ public class MessageController {
      * @param user
      * @return ResponseEntity
      */
-    @PostMapping("/publish")
+    @PostMapping("/json/publish")
     public ResponseEntity<String> sendJsonMessage(@RequestBody User user){
         rabbitMQJsonProducer.sendJsonMessage(user);
         return ResponseEntity.ok("Json message sent to RabbitMQ.");

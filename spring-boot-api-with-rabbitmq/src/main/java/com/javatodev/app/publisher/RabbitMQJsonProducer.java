@@ -8,7 +8,12 @@ import org.springframework.stereotype.Service;
 
 import com.javatodev.app.dto.User;
 
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @Service
+@RequiredArgsConstructor
 public class RabbitMQJsonProducer {
 
     @Value("${rabbitmq.exchange.name}")
@@ -17,20 +22,15 @@ public class RabbitMQJsonProducer {
     @Value("${rabbitmq.routing.json.key}")
     private String routingJsonKey;
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(RabbitMQJsonProducer.class);
+    private final RabbitTemplate rabbitTemplate;
 
-    private RabbitTemplate rabbitTemplate;
-
-    public RabbitMQJsonProducer(RabbitTemplate rabbitTemplate) {
-        this.rabbitTemplate = rabbitTemplate;
-    }
 
     /**
      * Produce json message to RabbitMQ json queue
      * @param user
      */
     public void sendJsonMessage(User user){
-        LOGGER.info(String.format("Json message sent -> %s",user.toString()));
+        log.info(String.format("Json message sent -> %s",user.toString()));
         rabbitTemplate.convertAndSend(exchange,routingJsonKey,user);
     }
 }

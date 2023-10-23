@@ -1,15 +1,13 @@
 package com.javatodev.app.consumer;
 
 import com.javatodev.app.dto.User;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.stereotype.Service;
 
+@Slf4j
 @Service
 public class RabbitMQJsonConsumer {
-
-    private static final Logger LOGGER = LoggerFactory.getLogger(RabbitMQJsonConsumer.class);
 
     /**
      * Consume message from RabbitMQ json queue
@@ -17,7 +15,6 @@ public class RabbitMQJsonConsumer {
      */
     @RabbitListener(queues = {"${rabbitmq.queue.json.name}"})
     public void consumeJsonMessage(User user){
-        LOGGER.info(String.format("Received json message -> %s", user.toString()));
-
+        log.info(String.format("Received json message -> %s", user.toString()));
     }
 }

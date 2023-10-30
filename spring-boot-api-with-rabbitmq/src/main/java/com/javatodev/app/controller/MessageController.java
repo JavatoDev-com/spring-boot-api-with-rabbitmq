@@ -12,7 +12,6 @@ import com.javatodev.app.publisher.RabbitMQProducer;
 public class MessageController {
 
     private final RabbitMQProducer rabbitMQProducer;
-
     private final RabbitMQJsonProducer rabbitMQJsonProducer;
 
     public MessageController(RabbitMQProducer rabbitMQProducer, RabbitMQJsonProducer rabbitMQJsonProducer) {
@@ -22,22 +21,24 @@ public class MessageController {
 
     /**
      * API for publish message for RabbitMQ queue
+     *
      * @param message
      * @return ResponseEntity
      */
     @GetMapping("/publish")
-    public ResponseEntity<String> sendMessage(@RequestParam("message") String message){
+    public ResponseEntity<String> sendMessage(@RequestParam("message") String message) {
         rabbitMQProducer.sendMessage(message);
         return ResponseEntity.ok("Message sent to RabbitMQ.");
     }
 
     /**
      * API for publish message for RabbitMQ json queue
+     *
      * @param user
      * @return ResponseEntity
      */
     @PostMapping("/publish")
-    public ResponseEntity<String> sendJsonMessage(@RequestBody User user){
+    public ResponseEntity<String> sendJsonMessage(@RequestBody User user) {
         rabbitMQJsonProducer.sendJsonMessage(user);
         return ResponseEntity.ok("Json message sent to RabbitMQ.");
     }
